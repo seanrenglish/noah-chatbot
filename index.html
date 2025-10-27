@@ -233,7 +233,7 @@ async function sendMessage() {
   const reply = data.reply;
 
   // Show bot reply
-  chatbox.innerHTML += `<div class="message bot">Jiwoo: ${reply}</div>`;
+  chatbox.innerHTML += `<div class="message bot">${botName}: ${reply}</div>`;
   chatbox.scrollTop = chatbox.scrollHeight;
 
   // Add bot message to conversation
