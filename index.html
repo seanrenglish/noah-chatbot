@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Noah Chatbot</title>
+  <title>Jiwoo Chatbot</title>
   <style>
     body { font-family: sans-serif; padding: 20px; background: #f4f4f4; }
     #chatbox { border: 1px solid #ccc; background: #fff; padding: 10px; height: 400px; overflow-y: auto; }
@@ -11,6 +11,8 @@
     .bot { color: #333; }
     #input { width: 100%; padding: 10px; margin-top: 10px; }
     #send { padding: 10px 20px; background: green; color: white; border: none; cursor: pointer; }
+    #refresh { padding: 10px 20px; background: #888; color: white; border: none; cursor: pointer; margin-left: 10px; }
+    #refresh:hover { opacity: 0.9; }
   </style>
 </head>
 <body>
@@ -18,14 +20,17 @@
 <div id="chatbox"></div>
 <input id="input" type="text" placeholder="Type your message here...">
 <button id="send">Send</button>
+<button id="refresh">Refresh</button>
 
 <script>
 const chatbox = document.getElementById('chatbox');
 const input = document.getElementById('input');
 const send = document.getElementById('send');
+const refresh = document.getElementById('refresh');
+const botName = "Jiwoo";
 
 // Generate or retrieve convo_id
-const convoId = sessionStorage.getItem('convo_id') || 'convo_' + Date.now();
+let convoId = sessionStorage.getItem('convo_id') || 'convo_' + Date.now();
 sessionStorage.setItem('convo_id', convoId);
 
 // Start the conversation with the system prompt
@@ -158,8 +163,7 @@ Object: Add/Subtract | Compare | Diagram | Distribution | Formula-Related | Part
 
 }];
 // === Auto-Greeting Message on Load ===
-window.addEventListener('load', () => {
-  const botName = "Noah"; 
+window.addEventListener('load', () => { 
   const greeting = `👩🏻‍💼 Mentor: Hello! I am your mentor teacher. Please introduce yourself to ${botName}.`;
 
   // show greeting immediately
@@ -212,6 +216,24 @@ input.addEventListener('keydown', (event) => {
     event.preventDefault();  // prevent newline
     sendMessage();
   }
+});
+
+// Refresh button click
+refresh.addEventListener('click', () => {
+  // Generate new conversation ID
+  convoId = 'convo_' + Date.now();
+  sessionStorage.setItem('convo_id', convoId);
+
+  // Reset conversation (keep system prompt)
+  conversation = [{
+    role: 'system',
+    content: conversation[0].content
+  }];
+
+  // Clear chat display
+  chatbox.innerHTML = `<div class="message bot">👩🏻‍💼 Mentor: Hello! I am your mentor teacher. Please introduce yourself to ${botName}.</div>`;
+  input.value = '';
+  chatbox.scrollTop = chatbox.scrollHeight;
 });
 </script>
 
