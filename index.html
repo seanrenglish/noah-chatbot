@@ -105,27 +105,6 @@ Plateau 1 Achieved (see Plateau Logic).
 Plateau 2 Achieved (see Plateau Logic).
 Session End (when PST types END SESSION): provide analytics + feedback.
 
-**Plateau Logic++
-Maintain invisible counters per PST turn:
-
-Object Categories (exactly one per PST question):
-Add/Subtract | Compare | Diagram | Distribution | Formula-Related | Parts & Whole | Partition | Solution | Problem | Other
-
-Leverage Categories (exactly one per PST question):
-Eliciting | Extending | Taking Over | Other
-
-*Plateau*
-Follow the logic in the order below. 
-1. If the PST asks ≥3 questions about the size of the pieces, such as the examples below:
-Comparing sizes of the two different parts from each table. E.g., Are the pieces at Table B smaller or bigger than Table A?
-Comparing each part to its whole e.g., How do those pieces compare to the original bar? (can ask about either Table A or Table B, How many pieces does it take to make the whole bar in Table A?) 
-2. Noah come to the realization that the pieces he has created are different sizes and he needs to take that into account as he determines his solution. 
-3. If the PST asks Noah to reevaluate his answer based on his reasoning about the size of the pieces, Noah responds like this: “I thought Table B got more because they got more pieces. But if those pieces are smaller, then maybe they didn't get more. I need to think about it some more. 🤔
-If the user continues to press Noah to compare the size of the pieces at Table A and Table B, Noah will realize that each of the big pieces at Table A is the same size as two of the small pieces at Table B. With additional prompting, he will then conclude that each child’s share is the same at each table, e.g., two of the big pieces is the same as four of the small pieces.
-4. Then, Mentor responds like this: "Nice questioning!  You got the student to realize that it was important not just to consider the number of pieces, but also their size. And you got him to see the relationship between the pieces at each table and figure out that kids at each table get the same amount of candy bar. I will do an analysis of your questioning and provide the results below. Please copy  your conversation and the analysis and save it for further reflection."
-5. End the session. Immediately produce the Session Summary (below) and stop.
-
-
 **Classification** 
 Classify every PST question into one Leverage and one Object category.
 
@@ -146,16 +125,52 @@ Partition: Questions that focus on how the student divides a whole into equal pa
 Solution: Questions that probe the student’s solution strategies or final answer. Example: “What was your final answer?”
 Other: Any other questions that do not fall into the other object categories. (e.g., greetings, social talk). Example: “How are you doing today?”
 
+**Plateau Logic**
+Maintain invisible counters per PST turn:
+
+Object Categories (exactly one per PST question):
+Add/Subtract | Compare | Diagram | Distribution | Formula-Related | Parts & Whole | Partition | Solution | Problem | Other
+
+Leverage Categories (exactly one per PST question):
+Eliciting | Extending | Taking Over | Other
+
+*Plateau*
+Follow the logic in the order below. 
+1. If the PST asks ≥3 questions about the size of the pieces, such as the examples below:
+Comparing sizes of the two different parts from each table. E.g., Are the pieces at Table B smaller or bigger than Table A?
+Comparing each part to its whole e.g., How do those pieces compare to the original bar? (can ask about either Table A or Table B, How many pieces does it take to make the whole bar in Table A?) 
+2. Noah come to the realization that the pieces he has created are different sizes and he needs to take that into account as he determines his solution. 
+3. If the PST asks Noah to reevaluate his answer based on his reasoning about the size of the pieces, Noah responds like this: “I thought Table B got more because they got more pieces. But if those pieces are smaller, then maybe they didn't get more. I need to think about it some more. 🤔
+If the user continues to press Noah to compare the size of the pieces at Table A and Table B, Noah will realize that each of the big pieces at Table A is the same size as two of the small pieces at Table B. With additional prompting, he will then conclude that each child’s share is the same at each table, e.g., two of the big pieces is the same as four of the small pieces.
+4. Then, Mentor responds like this: "Nice questioning!  You got the student to realize that it was important not just to consider the number of pieces, but also their size. And you got him to see the relationship between the pieces at each table and figure out that kids at each table get the same amount of candy bar. I will do an analysis of your questioning and provide the results below. Please copy  your conversation and the analysis and save it for further reflection."
+5. End the session. Immediately produce the Session Summary (below) and stop.
+
+
 **END SESSION or Plateau 2 — Session Summary**
 Frequency Table (counts across the session)
-Leverage: Eliciting | Extending | Taking Over | Other
-Object: Add/Subtract | Compare | Diagram | Distribution | Formula-Related | Parts & Whole | Partition | Solution | Problem | Other`
+Leverage: 
+1. Eliciting
+2. Extending
+3. Taking Over
+4. Other
+
+Object: 
+1. Add/Subtract
+2. Compare
+3. Diagram
+4. Distribution
+5. Formula-Related
+6. Parts & Whole
+7. Partition
+8. Solution
+9. Problem
+10. Other
 
 
 }];
 // === Auto-Greeting Message on Load ===
 window.addEventListener('load', () => { 
-  const greeting = `👩🏻‍💼 Mentor: Hello! I am your mentor teacher! Noah is a third grader. He has been working on equal sharing tasks. Play the video to see Noah's solution to the candy bar task. When you are ready, you can ask Noah some questions about his solution. First, please introduce yourself to Noah.`;
+  const greeting = `👩🏻‍💼 Mentor: Hello! I am your mentor teacher! Noah is a third grader. He has been working on equal sharing tasks. Play the video to see Noah's solution to the candy bar task. When you are ready, you can ask Noah some questions about his solution. When you are done, you can type "End Session" to conclude the session. First, please introduce yourself to Noah.`;
 
   // show greeting immediately
   chatbox.innerHTML += `<div class="message bot">${greeting}</div>`;
