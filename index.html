@@ -2,26 +2,96 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Noah Chatbot</title>
+  <title>Jiwoo Chatbot</title>
   <style>
-    body { font-family: sans-serif; padding: 20px; background: #f4f4f4; }
-    #chatbox { border: 1px solid #ccc; background: #fff; padding: 10px; height: 400px; overflow-y: auto; }
-    .message { margin: 10px 0; }
-    .user { color: green; font-weight: bold; }
-    .bot { color: #333; }
-    #input { width: 100%; padding: 10px; margin-top: 10px; }
-    #send { padding: 10px 20px; background: green; color: white; border: none; cursor: pointer; }
-    #refresh { padding: 10px 20px; background: #888; color: white; border: none; cursor: pointer; margin-left: 10px; }
-    #refresh:hover { opacity: 0.9; }
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+      background: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #container {
+      width: 350px;
+      height: 600px;
+      background: #fff;
+      border: 1px solid #ccc;
+      display: flex;
+      flex-direction: column;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    #chatbox {
+      flex-grow: 1;
+      overflow-y: auto;
+      margin-bottom: 10px;
+      padding: 10px;
+      border: 1px solid #ddd;
+    }
+
+    .message {
+      margin: 10px 0;
+    }
+
+    .user {
+      color: green;
+      font-weight: bold;
+    }
+
+    .bot {
+      color: #333;
+    }
+
+    #input {
+      width: 100%;
+      padding: 10px;
+      box-sizing: border-box;
+      margin-bottom: 10px;
+    }
+
+    #button-container {
+      display: flex;
+      justify-content: flex-start;
+      gap: 10px;
+    }
+
+    #send {
+      padding: 10px 20px;
+      background: green;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    #refresh {
+      padding: 10px 20px;
+      background: #888;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    #refresh:hover {
+      opacity: 0.9;
+    }
   </style>
 </head>
 <body>
 
-<div id="chatbox"></div>
-<input id="input" type="text" placeholder="Type your message here...">
-<button id="send">Send</button>
-<button id="refresh">Refresh</button>
-
+<div id="container">
+  <div id="chatbox"></div>
+  <input id="input" type="text" placeholder="Type your message here...">
+  <div id="button-container">
+    <button id="send">Send</button>
+    <button id="refresh">Refresh</button>
+  </div>
+</div>
+  
 <script>
 const chatbox = document.getElementById('chatbox');
 const input = document.getElementById('input');
