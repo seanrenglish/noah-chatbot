@@ -5,6 +5,31 @@ export default async function handler(req, res) {
 
   const { messages, convo_id } = req.body;
 
+  
+  function extractClassification(reply) {
+    const marker = "[CLASSIFICATION]";
+    const idx = reply.indexOf(marker);
+
+    if (idx === -1) {
+      return { cleanReply: reply, leverage: null, object: null };
+    }
+
+    const cleanReply = reply.substring(0, idx).trim();
+    const jsonText = reply.substring(idx + marker.length).trim();
+
+    try {
+      const parsed = JSON.parse(jsonText);
+      return {
+        cleanReply,
+        leverage: parsed.leverage || null,
+        object: parsed.object || null
+      };
+    } catch (e) {
+      console.error("Failed to parse CLASSIFICATION JSON:", e);
+      return { cleanReply, leverage: null, object: null };
+    }
+  }
+
   try {
     // --- 1️⃣ Call OpenAI ---
     const openaiRes = await fetch("https://api.openai.com/v1/chat/completions", {
@@ -20,8 +45,11 @@ export default async function handler(req, res) {
     });
 
     const data = await openaiRes.json();
-    const reply = data.choices?.[0]?.message?.content || "[No response]";
+    const fullReply = data.choices?.[0]?.message?.content || "[No response]";
     const turn = messages.length;
+
+    
+    const { cleanReply, leverage, object } = extractClassification(fullReply);
 
     // --- 2️⃣ Setup Supabase details ---
     const supabaseUrl = process.env.SUPABASE_URL;
@@ -34,10 +62,9 @@ export default async function handler(req, res) {
     };
 
     // --- 3️⃣ Helper function to log messages ---
-  
-    async function logMessage(role, message, turnNum) {
-      const botName = "Noah"; 
-    
+    async function logMessage(role, message, turnNum, leverageVal = null, objectVal = null) {
+      const botName = "Noah";
+
       await fetch(`${supabaseUrl}/rest/v1/logs`, {
         method: "POST",
         headers,
@@ -46,20 +73,26 @@ export default async function handler(req, res) {
           turn: turnNum,
           role,
           message,
-          bot_name: botName  // ✅ new field added
+          bot_name: botName,
+          leverage: leverageVal,  
+          object: objectVal        
         })
       });
     }
 
-    // --- 4️⃣ Log the latest user message (the second-to-last in the array) ---
+    // --- 4️⃣ Log latest user message ---
     const userMessage = messages.at(-1)?.content || "unknown";
     await logMessage("user", userMessage, turn);
 
-    // --- 5️⃣ Log the assistant reply ---
-    await logMessage("assistant", reply, turn + 1);
+    // --- 5️⃣ Log assistant reply WITH classifications ---
+    await logMessage("assistant", cleanReply, turn + 1, leverage, object);
 
-    // --- 6️⃣ Return response to frontend ---
-    res.status(200).json({ reply });
+    // --- 6️⃣ Return clean assistant reply (not the JSON block) ---
+    res.status(200).json({
+      reply: cleanReply,
+      leverage,
+      object
+    });
 
   } catch (err) {
     console.error("Error during OpenAI or Supabase call:", err);
