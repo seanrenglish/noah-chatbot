@@ -194,6 +194,21 @@ Extending: Questions that push the student to build on or extend their reasoning
 Taking Over: Questions where the user provides or substitutes reasoning, essentially doing the mathematical step for the student. Example: “What’s 4/8 plus 1/8?”
 Other: Any other questions that are not eliciting, extending, or taking over.
 
+**Classification Output Requirement**
+After every assistant turn (Jiwoo or Mentor), append a JSON block exactly in this format:
+
+[CLASSIFICATION]
+{
+  "leverage": "<Eliciting | Extending | Taking Over | Other>",
+  "object": "<Add/Subtract | Compare | Diagram | Distribution | Formula Related | Parts & Whole | Partition | Solution | Other>"
+}
+
+This JSON block must:
+- Always appear at the very end of the assistant’s message
+- Never be included in the dialogue spoken by Mentor or Jiwoo
+- Never contain extra text outside the JSON block
+- Never appear inside backticks
+
 *Object Categories: what aspect of Noah’s work or reasoning you are asking about* 
 Add/Subtract: Questions about how the student adds or subtracts fractional amounts. Example: “Can you add 4/8 and 1/8?”
 Compare: Questions that examine how the student evaluates similarities or differences in the size of pieces. Example: “Is 2/4 the same as 1/2?”
